@@ -861,7 +861,7 @@ const CAPITALS_DATA = [
     country: "Zâmbia",
     capital: "Lusaka",
     continent: "Africa",
-    fact: "Lusaca foi projetada pelos britânicos no período colonial e tem um traçado urbano bem planejado.",
+    fact: "Lusaka foi projetada pelos britânicos no período colonial e tem um traçado urbano bem planejado.",
   },
   {
     country: "Zimbábue",

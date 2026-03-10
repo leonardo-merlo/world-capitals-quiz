@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Capitals Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─── CSS Variables & Reset ─── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0b0c10;
+        --surface: #13151c;
+        --card: #1a1d28;
+        --border: #2a2e42;
+        --accent: #e8c84a;
+        --accent2: #5b8dee;
+        --danger: #e85a5a;
+        --success: #4ae8a0;
+        --text: #eef0f8;
+        --muted: #7a80a0;
+        --radius: 18px;
+        --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        overflow-x: hidden;
+      }
+
+      /* ─── Animated background ─── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 20% 10%,
+            rgba(91, 141, 238, 0.08) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 60% 50% at 80% 90%,
+            rgba(232, 200, 74, 0.07) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse 40% 40% at 50% 50%,
+            rgba(74, 232, 160, 0.04) 0%,
+            transparent 60%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── App wrapper ─── */
+      #app {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 680px;
+      }
+
+      /* ─── Screen transitions ─── */
+      .screen {
+        display: none;
+        animation: fadeUp 0.4s ease both;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ─── Card ─── */
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--accent2),
+          var(--accent),
+          var(--success)
+        );
+        border-radius: var(--radius) var(--radius) 0 0;
+      }
+
+      /* ─── Typography ─── */
+      .display {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+
+      .display em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      /* ─── Subtitle badge ─── */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: rgba(91, 141, 238, 0.15);
+        border: 1px solid rgba(91, 141, 238, 0.3);
+        color: var(--accent2);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.35rem 0.9rem;
+        border-radius: 100px;
+        margin-bottom: 1.25rem;
+      }
+
+      /* ─── Select & Input ─── */
+      select,
+      input[type="text"] {
+        width: 100%;
+        background: var(--surface);
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        padding: 0.85rem 1.1rem;
+        outline: none;
+        transition:
+          border-color var(--transition),
+          box-shadow var(--transition);
+        -webkit-appearance: none;
+      }
+
+      select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a80a0' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        cursor: pointer;
+      }
+
+      select:focus,
+      input[type="text"]:focus {
+        border-color: var(--accent2);
+        box-shadow: 0 0 0 4px rgba(91, 141, 238, 0.12);
+      }
+
+      input[type="text"]::placeholder {
+        color: var(--muted);
+      }
+
+      /* ─── Buttons ─── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.9rem 2rem;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        transition: all var(--transition);
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #0b0c10;
+        width: 100%;
+      }
+
+      .btn-primary:hover {
+        background: #f0d460;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(232, 200, 74, 0.3);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--text);
+        border: 2px solid var(--border);
+        flex: 1;
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--muted);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .btn-danger {
+        background: rgba(232, 90, 90, 0.15);
+        color: var(--danger);
+        border: 2px solid rgba(232, 90, 90, 0.3);
+        flex: 1;
+      }
+
+      .btn-danger:hover {
+        background: rgba(232, 90, 90, 0.25);
+      }
+
+      .btn-success {
+        background: rgba(74, 232, 160, 0.15);
+        color: var(--success);
+        border: 2px solid rgba(74, 232, 160, 0.3);
+        flex: 1;
+      }
+
+      .btn-success:hover {
+        background: rgba(74, 232, 160, 0.25);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+
+      /* ─── Form group ─── */
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .form-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      /* ─── Score bar ─── */
+      .score-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+      }
+
+      .score-pill {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        padding: 0.4rem 1.1rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .progress-wrap {
+        flex: 1;
+        height: 6px;
+        background: var(--surface);
+        border-radius: 100px;
+        margin: 0 1rem;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent2), var(--accent));
+        border-radius: 100px;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .question-counter {
+        font-size: 0.85rem;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      /* ─── Country display ─── */
+      .country-card {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .country-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+
+      .country-name {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 6vw, 3.2rem);
+        font-weight: 900;
+        line-height: 1.1;
+        background: linear-gradient(
+          135deg,
+          var(--text) 0%,
+          rgba(238, 240, 248, 0.6) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* ─── Feedback box ─── */
+      .feedback {
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin: 1.25rem 0;
+        animation: fadeUp 0.3s ease both;
+      }
+
+      .feedback.correct {
+        background: rgba(74, 232, 160, 0.1);
+        border: 1px solid rgba(74, 232, 160, 0.25);
+      }
+
+      .feedback.wrong {
+        background: rgba(232, 90, 90, 0.1);
+        border: 1px solid rgba(232, 90, 90, 0.25);
+      }
+
+      .feedback-header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .feedback-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+
+      .feedback.correct .feedback-icon {
+        background: rgba(74, 232, 160, 0.2);
+      }
+      .feedback.wrong .feedback-icon {
+        background: rgba(232, 90, 90, 0.2);
+      }
+
+      .feedback-title {
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+
+      .feedback.correct .feedback-title {
+        color: var(--success);
+      }
+      .feedback.wrong .feedback-title {
+        color: var(--danger);
+      }
+
+      .feedback-answer {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+
+      .feedback-answer strong {
+        color: var(--text);
+      }
+
+      .feedback-fact {
+        font-size: 0.875rem;
+        color: var(--muted);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding-top: 0.75rem;
+        margin-top: 0.75rem;
+        font-style: italic;
+      }
+
+      .feedback-fact::before {
+        content: "💡 ";
+      }
+
+      /* ─── Results screen ─── */
+      .result-hero {
+        text-align: center;
+        padding: 2rem 0 1.5rem;
+      }
+
+      .result-score {
+        font-family: "Playfair Display", serif;
+        font-size: 5rem;
+        font-weight: 900;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .result-label {
+        color: var(--muted);
+        margin-top: 0.5rem;
+        font-size: 1.05rem;
+      }
+
+      .wrong-list {
+        margin-top: 1.5rem;
+      }
+
+      .wrong-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .wrong-item:last-child {
+        border-bottom: none;
+      }
+
+      .wrong-country {
+        font-weight: 500;
+      }
+
+      .wrong-capital {
+        font-size: 0.9rem;
+        background: rgba(232, 200, 74, 0.12);
+        color: var(--accent);
+        padding: 0.2rem 0.75rem;
+        border-radius: 100px;
+        font-weight: 600;
+      }
+
+      /* ─── Review mode banner ─── */
+      .review-banner {
+        background: linear-gradient(
+          135deg,
+          rgba(91, 141, 238, 0.15),
+          rgba(232, 200, 74, 0.1)
+        );
+        border: 1px solid rgba(91, 141, 238, 0.3);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .review-banner-icon {
+        font-size: 1.5rem;
+      }
+
+      .review-banner-text {
+        font-size: 0.9rem;
+        color: var(--accent2);
+        font-weight: 500;
+      }
+
+      .review-banner-text strong {
+        color: var(--text);
+      }
+
+      /* ─── Celebration screen ─── */
+      .celebration {
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      .trophy {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: bounce 0.6s ease infinite alternate;
+      }
+
+      @keyframes bounce {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-10px);
+        }
+      }
+
+      .stat-row {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .stat-box {
+        flex: 1;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.25rem;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .stat-key {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        margin-top: 0.25rem;
+      }
+
+      /* ─── Divider ─── */
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 1.5rem 0;
+      }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 480px) {
+        .card {
+          padding: 1.75rem 1.25rem;
+        }
+        .btn-group {
+          flex-direction: column;
+        }
+      }
+
+      /* ─── Input Enter hint ─── */
+      .input-hint {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 0.4rem;
+      }
+
+      /* ─── Reset button (canto superior direito do quiz) ─── */
+      .btn-reset {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 500;
+        padding: 0.35rem 0.8rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .btn-reset:hover {
+        border-color: var(--danger);
+        color: var(--danger);
+        background: rgba(232, 90, 90, 0.07);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- ════════════════════════════════════ SCREEN: Start ═══ -->
+      <div id="screen-start" class="screen active">
+        <div class="card">
+          <div class="badge">🌍 Geography Challenge</div>
+          <h1 class="display">World <em>Capitals</em><br />Quiz</h1>
+          <p style="margin: 1rem 0 2rem">
+            Teste seus conhecimentos sobre as capitais do mundo. Escolha o
+            continente e o número de perguntas para começar.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="sel-continent">Continente</label>
+            <select id="sel-continent">
+              <option value="all">🌐 Mundo inteiro</option>
+              <option value="Africa">🌍 África</option>
+              <option value="Asia">🌏 Ásia</option>
+              <option value="Europe">🌍 Europa</option>
+              <option value="North America">🌎 América do Norte</option>
+              <option value="South America">🌎 América do Sul</option>
+              <option value="Oceania">🌊 Oceania</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="sel-count"
+              >Número de perguntas</label
+            >
+            <select id="sel-count">
+              <option value="5">5 perguntas</option>
+              <option value="10" selected>10 perguntas</option>
+              <option value="20">20 perguntas</option>
+              <option value="all">Todas disponíveis</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" onclick="startQuiz()">
+            Começar desafio →
+          </button>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════ SCREEN: Quiz ════ -->
+      <div id="screen-quiz" class="screen">
+        <div class="card">
+          <!-- botao de reset no canto - disponivel a qualquer momento -->
+          <button class="btn-reset" onclick="goHome()">✕ Reiniciar</button>
+
+          <!-- Review mode banner (hidden by default) -->
+          <div id="review-banner" class="review-banner" style="display: none">
+            <span class="review-banner-icon">🔄</span>
+            <span class="review-banner-text"
+              ><strong>Modo Revisão</strong> — Você está revisando as respostas
+              erradas</span
+            >
+          </div>
+
+          <!-- Score + progress -->
+          <div class="score-bar">
+            <span class="score-pill" id="score-display">0 / 0</span>
+            <div class="progress-wrap">
+              <div
+                class="progress-fill"
+                id="progress-fill"
+                style="width: 0%"
+              ></div>
+            </div>
+            <span class="question-counter" id="question-counter">1 / 10</span>
+          </div>
+
+          <!-- Country name -->
+          <div class="country-card">
+            <div class="country-label">Qual é a capital de...</div>
+            <div class="country-name" id="country-name">—</div>
+          </div>
+
+          <!-- Answer input -->
+          <div id="input-area">
+            <div class="form-group">
+              <input
+                type="text"
+                id="answer-input"
+                placeholder="Digite a capital..."
+                autocomplete="off"
+                autocorrect="off"
+                spellcheck="false"
+                onkeydown="handleKeydown(event)"
+              />
+              <span id="input-hint" class="input-hint"
+                >Pressione Enter ou clique em Responder</span
+              >
+            </div>
+            <button
+              class="btn btn-primary"
+              id="btn-answer"
+              onclick="submitAnswer()"
+            >
+              Responder
+            </button>
+          </div>
+
+          <!-- Feedback (hidden until answered) -->
+          <div id="feedback-area" style="display: none"></div>
+
+          <!-- Next button (hidden until answered) -->
+          <div id="next-area" style="display: none; margin-top: 1rem">
+            <button class="btn btn-primary" onclick="nextQuestion()">
+              Próxima pergunta →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════ SCREEN: Results ═ -->
+      <div id="screen-results" class="screen">
+        <div class="card">
+          <div class="result-hero">
+            <div class="result-score" id="result-score-display">—</div>
+            <p class="result-label" id="result-label-text">
+              perguntas respondidas
+            </p>
+          </div>
+
+          <div id="wrong-list-section" style="display: none">
+            <hr class="divider" />
+            <h3>Países que você errou</h3>
+            <div class="wrong-list" id="wrong-list"></div>
+            <hr class="divider" />
+            <p style="margin-bottom: 1.25rem; color: var(--text)">
+              Quer revisar os países que errou?
+            </p>
+            <div class="btn-group">
+              <button class="btn btn-secondary" onclick="finishAll()">
+                Finalizar
+              </button>
+              <button class="btn btn-primary" onclick="startReview()">
+                🔄 Revisar erros
+              </button>
+            </div>
+          </div>
+
+          <div id="no-wrong-section" style="display: none">
+            <hr class="divider" />
+            <p
+              style="
+                text-align: center;
+                color: var(--success);
+                font-weight: 600;
+              "
+            >
+              Você acertou tudo! Perfeito! 🎉
+            </p>
+            <div class="btn-group" style="margin-top: 1.25rem">
+              <button class="btn btn-primary" onclick="goHome()">
+                Jogar novamente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════ SCREEN: Celebration ═ -->
+      <div id="screen-celebration" class="screen">
+        <div class="card">
+          <div class="celebration">
+            <div class="trophy">🏆</div>
+            <h2>Parabéns!</h2>
+            <p
+              style="margin-top: 0.5rem; font-size: 1.05rem; color: var(--text)"
+            >
+              Agora você acertou todas as capitais deste desafio.
+            </p>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-box">
+              <div class="stat-value" id="final-score">—</div>
+              <div class="stat-key">Acertos totais</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="final-reviews">—</div>
+              <div class="stat-key">Revisões feitas</div>
+            </div>
+          </div>
+
+          <div class="btn-group" style="margin-top: 1.5rem">
+            <button class="btn btn-primary" onclick="goHome()">
+              Jogar novamente
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="quiz.js"></script>
+  </body>
+</html>

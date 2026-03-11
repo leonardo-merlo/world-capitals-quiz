@@ -13,9 +13,9 @@ const CAPITALS_DATA = [
   },
   {
     country: "Andorra",
-    capital: "Andorra la Vella",
+    capital: "Andorra a Velha",
     continent: "Europe",
-    fact: "Andorra la Vella é a capital mais alta da Europa, a 1.023 metros de altitude.",
+    fact: "Andorra a Velha é a capital mais alta da Europa, a 1.023 metros de altitude.",
   },
   {
     country: "Áustria",
@@ -121,9 +121,9 @@ const CAPITALS_DATA = [
   },
   {
     country: "Islândia",
-    capital: "Reiquiavique",
+    capital: "Reykjavik",
     continent: "Europe",
-    fact: "Reiquiavique é a capital mais ao norte do mundo e funciona 100% com energia renovável.",
+    fact: "Reykjavik é a capital mais ao norte do mundo e funciona 100% com energia renovável.",
   },
   {
     country: "Itália",
@@ -304,9 +304,9 @@ const CAPITALS_DATA = [
   },
   {
     country: "Bangladesh",
-    capital: "Dhaka",
+    capital: "Daca",
     continent: "Asia",
-    fact: "Dhaka tem mais de 8 milhões de riquixás, o maior número de qualquer cidade do mundo.",
+    fact: "Daca tem mais de 8 milhões de riquixás, o maior número de qualquer cidade do mundo.",
   },
   {
     country: "Brunei",
@@ -454,9 +454,9 @@ const CAPITALS_DATA = [
   },
   {
     country: "Nepal",
-    capital: "Catmandu",
+    capital: "Katmandu",
     continent: "Asia",
-    fact: "Catmandu fica próxima ao Everest e é rodeada por sete Patrimônios Mundiais da UNESCO.",
+    fact: "Katmandu fica próxima ao Everest e é rodeada por sete Patrimônios Mundiais da UNESCO.",
   },
   {
     country: "Omã",
@@ -478,9 +478,9 @@ const CAPITALS_DATA = [
   },
   {
     country: "Quirguistão",
-    capital: "Bisqueque",
+    capital: "Bishkek",
     continent: "Asia",
-    fact: "Bisqueque fica em um vale rodeado pela majestosa Cordilheira Tian Shan.",
+    fact: "Bishkek fica em um vale rodeado pela majestosa Cordilheira Tian Shan.",
   },
   {
     country: "Síria",
@@ -490,9 +490,9 @@ const CAPITALS_DATA = [
   },
   {
     country: "Sri Lanka",
-    capital: "Colombo",
+    capital: "Sri Jayawardenepura Kotte",
     continent: "Asia",
-    fact: "Colombo é o principal porto do sul da Ásia e um grande centro econômico regional.",
+    fact: "Sri Jayawardenepura Kotte virou capital oficial em 1982, substituindo Colombo, que ainda é a maior cidade e centro comercial do país.",
   },
   {
     country: "Tailândia",
@@ -502,9 +502,9 @@ const CAPITALS_DATA = [
   },
   {
     country: "Tajiquistão",
-    capital: "Duchambe",
+    capital: "Dushanbe",
     continent: "Asia",
-    fact: "Duchambe significa segunda-feira em persa, pois cresceu a partir de um mercado semanal.",
+    fact: "Dushanbe significa segunda-feira em persa, pois cresceu a partir de um mercado semanal.",
   },
   {
     country: "Timor-Leste",
@@ -642,7 +642,7 @@ const CAPITALS_DATA = [
     fact: "Asmara tem uma das maiores coleções de arquitetura Art Déco do mundo, herança italiana.",
   },
   {
-    country: "Eswatini",
+    country: "Essuatíni",
     capital: "Mbabane",
     continent: "Africa",
     fact: "Mbabane é a capital administrativa, mas Lobamba é a capital real e legislativa do país.",
@@ -1054,12 +1054,6 @@ const CAPITALS_DATA = [
     capital: "Georgetown",
     continent: "South America",
     fact: "Georgetown é a única capital de língua inglesa da América do Sul.",
-  },
-  {
-    country: "Guiana Francesa",
-    capital: "Caiena",
-    continent: "South America",
-    fact: "Caiena é um território ultramarino da França e abriga a Base de Lançamento de Kourou da ESA.",
   },
   {
     country: "Paraguai",

@@ -359,3 +359,5 @@ function handleKeydown(event) {
     submitAnswer();
   }
 }
+
+document.addEventListener("keydown", handleKeydown);

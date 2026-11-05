@@ -1,51 +1,29 @@
-# Quiz de Capitais do Mundo
+# world-capitals-quiz
 
-## Objetivo
+Browser quiz about world capitals: pick a continent and a number of questions, type the capital of each country, and replay only the ones you missed until you get them all right.
 
-Criar um quiz simples para testar conhecimentos sobre países e suas capitais, focado em aprendizado ativo, feedback rápido e revisão inteligente dos erros.
+> **About this repository.** A small study project in plain HTML, CSS and JavaScript, with no build step and no dependencies. The interface and the country names are in Portuguese.
 
-## Dinâmica do Quiz
+## What it does
 
-1. **Escolha do modo**
-   - Mundo inteiro
-   - Por continente
+- **Setup:** choose the whole world or one continent, and 5, 10, 20 or all questions.
+- **Questions:** a country appears and you type its capital. The answer is checked right away, with the correct capital and a short fact about the place.
+- **Forgiving check:** answers are compared after trimming spaces, lowercasing and removing accents (`normalizeAnswer` in `quiz.js`), so "brasilia" matches "Brasília".
+- **Results:** score, plus the list of countries you got wrong.
+- **Review mode:** a new round with only the missed countries, repeated until none is left, then a final screen with the total and the number of review rounds.
 
-2. **Número de perguntas**
-   - O usuário define quantas perguntas deseja responder.
+## Tech stack
 
-3. **Perguntas**
-   - Um **país** aparece na tela.
-   - O usuário digita a **capital**.
-   - O sistema fornece **feedback imediato** indicando se a resposta está correta ou incorreta.
+HTML · CSS · JavaScript (no framework)
 
-4. **Score final**
-   - Ao terminar o quiz o usuário vê:
-     - Número de acertos
-     - Número de erros
-
-5. **Revisão opcional**
-   - O usuário pode refazer **apenas as perguntas que errou**, reforçando o aprendizado.
-
-## Tecnologias Utilizadas
-
-- **HTML** → estrutura da interface
-- **CSS** → estilização básica
-- **JavaScript (Vanilla JS)** → lógica do quiz
-
-Principais conceitos utilizados no JavaScript:
-
-- Manipulação do **DOM**
-- **Arrays e objetos** para armazenar países e capitais
-- **Eventos** para capturar respostas do usuário
-- **Lógica de validação** das respostas
-- **Controle de estado** do quiz (perguntas, score e revisão)
-
-## Estrutura do Projeto
+## Project layout
 
 ```
-project/
-
-index.html
-script.js
-style.css
+index.html   screens and styles
+data.js      192 countries with capital, continent and a fact
+quiz.js      quiz state, answer check, review rounds
 ```
+
+## Getting started
+
+Open `index.html` in a browser. Nothing to install.

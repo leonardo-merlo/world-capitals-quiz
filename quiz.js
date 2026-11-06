@@ -120,6 +120,13 @@ function renderQuestion() {
   // atualiza o nome do pais
   document.getElementById("country-name").textContent = q.country;
 
+  // bandeira do pais (flagcdn) e globo voando ate ele
+  const flag = document.getElementById("country-flag");
+  flag.src = flagUrl(q.code, 160);
+  flag.srcset = `${flagUrl(q.code, 320)} 2x`;
+  flag.alt = `Bandeira de ${q.country}`;
+  focusCountry(q.code);
+
   // atualiza o contador de perguntas ex: "3 / 10"
   document.getElementById("question-counter").textContent =
     `${currentIndex + 1} / ${total}`;
@@ -342,6 +349,7 @@ function goHome() {
 
   document.getElementById("review-banner").style.display = "none";
   showScreen("screen-start");
+  clearGlobeSelection();
 }
 
 // ---- eventos de teclado ----
@@ -349,6 +357,12 @@ function goHome() {
 // permite usar enter pra responder e pra ir pra proxima pergunta
 function handleKeydown(event) {
   if (event.key !== "Enter") return;
+
+  // so responde ao enter quando a tela de pergunta do quiz ta aberta
+  const quizNaTela =
+    appMode === "quiz" &&
+    document.getElementById("screen-quiz").classList.contains("active");
+  if (!quizNaTela) return;
 
   const nextArea = document.getElementById("next-area");
 

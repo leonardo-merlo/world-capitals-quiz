@@ -235,6 +235,7 @@ function renderCountryInfo(code) {
     <div class="info-head">
       <img
         class="info-flag"
+        title="Clique para ampliar a bandeira"
         src="${flagUrl(code, 160)}"
         srcset="${flagUrl(code, 320)} 2x"
         alt="Bandeira de ${escapeHtml(item.country)}"
@@ -262,31 +263,147 @@ function renderCountryInfo(code) {
   document.getElementById("explorer-info").hidden = false;
 }
 
-// busca por nome: ajuda a achar paises pequenos que sao dificeis de clicar
+// busca por nome: ajuda a achar paises pequenos que sao dificeis de clicar.
+// ao tocar no campo abre a lista inteira, separada por continente, e ela
+// vai filtrando conforme a pessoa digita
+
+// mesma ordem e mesmos nomes do seletor de continente do quiz
+const CONTINENT_LABELS = [
+  ["Africa", "África"],
+  ["Asia", "Ásia"],
+  ["Europe", "Europa"],
+  ["North America", "América do Norte / Central"],
+  ["South America", "América do Sul"],
+  ["Oceania", "Oceania"],
+];
+
 function setupExplorerSearch() {
   const input = document.getElementById("explorer-search");
   const list = document.getElementById("country-list");
 
-  list.innerHTML = [...CAPITALS_DATA]
-    .sort((a, b) => a.country.localeCompare(b.country, "pt-BR"))
-    .map((item) => `<option value="${escapeHtml(item.country)}"></option>`)
-    .join("");
+  const sorted = [...CAPITALS_DATA].sort((a, b) =>
+    a.country.localeCompare(b.country, "pt-BR"),
+  );
 
+  // a lista e montada uma vez so; filtrar e so esconder o que nao casa
+  const groups = CONTINENT_LABELS.map(([key, label]) => {
+    const items = sorted
+      .filter((item) => item.continent === key)
+      .map(
+        (item) => `
+          <li role="option" class="country-option" tabindex="-1"
+              data-code="${item.code}"
+              data-name="${escapeHtml(normalizeAnswer(item.country))}">
+            ${escapeHtml(item.country)}
+          </li>`,
+      )
+      .join("");
+    return `
+      <li class="country-group" role="presentation">
+        <div class="country-group-label">${label}</div>
+        <ul role="group" aria-label="${label}">${items}</ul>
+      </li>`;
+  }).join("");
+  list.innerHTML = `${groups}<li class="country-empty" hidden>Nenhum país encontrado</li>`;
+
+  const visibleOptions = () => [
+    ...list.querySelectorAll(".country-option:not([hidden])"),
+  ];
+
+  const filter = () => {
+    const typed = normalizeAnswer(input.value);
+    list.querySelectorAll(".country-option").forEach((li) => {
+      li.hidden = typed !== "" && !li.dataset.name.includes(typed);
+    });
+    list.querySelectorAll(".country-group").forEach((group) => {
+      group.hidden = !group.querySelector(".country-option:not([hidden])");
+    });
+    list.querySelector(".country-empty").hidden = visibleOptions().length > 0;
+  };
+
+  const openList = () => {
+    filter();
+    list.hidden = false;
+    input.setAttribute("aria-expanded", "true");
+  };
+
+  const closeList = () => {
+    list.hidden = true;
+    input.setAttribute("aria-expanded", "false");
+  };
+
+  const choose = (code) => {
+    input.value = COUNTRY_BY_CODE[code].country;
+    closeList();
+    exploreCountry(code);
+  };
+
+  // enter: o pais com o nome exato, senao o primeiro da lista filtrada
   const search = () => {
     const typed = normalizeAnswer(input.value);
     if (!typed) return;
-
-    const found = CAPITALS_DATA.find(
+    const exact = CAPITALS_DATA.find(
       (item) => normalizeAnswer(item.country) === typed,
     );
-    if (found) exploreCountry(found.code);
+    const first = visibleOptions()[0];
+    if (exact) choose(exact.code);
+    else if (first) choose(first.dataset.code);
   };
 
-  input.addEventListener("change", search);
+  input.addEventListener("focus", openList);
+  input.addEventListener("click", openList);
+  input.addEventListener("input", openList);
   input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") search();
+    if (event.key === "Enter") {
+      search();
+    } else if (event.key === "Escape") {
+      closeList();
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      openList();
+      visibleOptions()[0]?.focus();
+    }
+  });
+
+  // mousedown em vez de click: sem isso o campo perde o foco antes do click
+  list.addEventListener("mousedown", (event) => event.preventDefault());
+  list.addEventListener("click", (event) => {
+    const option = event.target.closest(".country-option");
+    if (option) choose(option.dataset.code);
+  });
+
+  // setas andam pela lista, enter escolhe, esc volta pro campo
+  list.addEventListener("keydown", (event) => {
+    const all = visibleOptions();
+    const index = all.indexOf(document.activeElement);
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      all[Math.min(index + 1, all.length - 1)]?.focus();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (index <= 0) input.focus();
+      else all[index - 1].focus();
+    } else if (event.key === "Enter" && index >= 0) {
+      event.preventDefault();
+      choose(all[index].dataset.code);
+    } else if (event.key === "Escape") {
+      closeList();
+      input.focus();
+    }
+  });
+
+  // fecha ao clicar ou tocar fora do campo e da lista
+  document.addEventListener("pointerdown", (event) => {
+    if (!event.target.closest(".explorer-search-wrap")) closeList();
   });
 }
+
+// a bandeira do painel do explorador abre ampliada, igual a do quiz
+document.getElementById("explorer-info").addEventListener("click", (event) => {
+  if (event.target.closest(".info-flag") && explorerCode) {
+    showFlagOverlay(explorerCode, COUNTRY_BY_CODE[explorerCode].country);
+  }
+});
 
 initGlobe();
 setupExplorerSearch();

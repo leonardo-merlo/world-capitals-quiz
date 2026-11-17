@@ -256,7 +256,7 @@ function renderCountryInfo(code) {
         )
         .join("")}
     </dl>
-    <p class="feedback-fact">${escapeHtml(item.fact)}</p>
+    ${renderFactsCarousel(code)}
   `;
 
   document.getElementById("explorer-empty").hidden = true;

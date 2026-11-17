@@ -8,11 +8,11 @@ Browser quiz about world capitals: pick a continent and a number of questions, t
 
 - **Two modes:** tabs at the top switch between the capitals quiz and the explorer.
 - **Setup:** choose the whole world or one continent, and 5, 10, 20 or all questions.
-- **Questions:** a country appears with its flag and you type its capital. The globe rotates and zooms to that country and highlights it. The answer is checked right away, with the correct capital and a short fact about the place.
+- **Questions:** a country appears with its flag and you type its capital. The globe rotates and zooms to that country and highlights it. The answer is checked right away, with the correct capital and a carousel of 3 facts about the country (one little-known fact and two things to do there).
 - **Forgiving check:** answers are compared after trimming spaces, lowercasing and removing accents (`normalizeAnswer` in `quiz.js`), so "brasilia" matches "Brasília".
 - **Results:** score, plus the list of countries you got wrong.
 - **Review mode:** a new round with only the missed countries, repeated until none is left, then a final screen with the total and the number of review rounds.
-- **Explorer:** click a country on the globe, or search it by name, to see its flag, capital, population, area, languages, currency and a fact. Countries too small for the outline map appear as dots.
+- **Explorer:** click a country on the globe, or search it by name, to see its flag, capital, population, area, languages, currency and the same facts carousel. Countries too small for the outline map appear as dots.
 
 ## Tech stack
 
@@ -30,8 +30,11 @@ The data is saved in the repository, so the site does not call any API at runtim
 
 ```
 index.html          screens and styles
-data.js             192 countries with capital, continent, a fact and ISO code
+data.js             192 countries with capital, continent and ISO code
 countries-info.js   extra data per country, keyed by ISO code
+curiosities.js      3 facts per country (generated from curiosidades/*.md)
+curiosidades/       sources of the facts, by continent (edit these)
+scripts/            build-curiosities.py: validates the .md files and generates curiosities.js
 countries-geo.js    country outlines for the globe
 quiz.js             quiz state, answer check, review rounds
 globe.js            3D globe and explorer mode

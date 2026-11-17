@@ -747,6 +747,55 @@
         margin: 0 auto 1rem;
         border-radius: 6px;
         box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+        cursor: zoom-in;
+      }
+
+      /* ─── Bandeira ampliada (overlay) ─── */
+      .flag-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        background: rgba(0, 0, 0, 0.88);
+        cursor: zoom-out;
+      }
+
+      .flag-overlay[hidden] {
+        display: none;
+      }
+
+      .flag-overlay-img {
+        display: block;
+        width: 100%;
+        max-width: 1280px;
+        max-height: calc(100vh - 32px);
+        max-height: calc(100dvh - 32px);
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+      }
+
+      .flag-overlay-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        background: var(--card);
+        color: var(--text);
+        font-size: 1.5rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .flag-overlay-close:hover {
+        border-color: var(--accent);
+        color: var(--accent);
       }
 
       /* ─── Painel do explorador ─── */
@@ -946,7 +995,12 @@
 
               <!-- Country name -->
               <div class="country-card">
-                <img id="country-flag" class="country-flag" alt="" />
+                <img
+                  id="country-flag"
+                  class="country-flag"
+                  alt=""
+                  title="Clique para ampliar a bandeira"
+                />
                 <div class="country-label">Qual é a capital de...</div>
                 <div class="country-name" id="country-name">—</div>
               </div>
@@ -1104,6 +1158,25 @@
         </p>
       </div>
     </main>
+
+    <div
+      id="flag-overlay"
+      class="flag-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Bandeira ampliada"
+      hidden
+    >
+      <button
+        type="button"
+        id="flag-overlay-close"
+        class="flag-overlay-close"
+        aria-label="Fechar bandeira ampliada"
+      >
+        &times;
+      </button>
+      <img id="flag-overlay-img" class="flag-overlay-img" alt="" />
+    </div>
 
     <script src="data.js"></script>
     <script src="countries-info.js"></script>

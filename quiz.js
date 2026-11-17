@@ -375,3 +375,50 @@ function handleKeydown(event) {
 }
 
 document.addEventListener("keydown", handleKeydown);
+
+// ---- bandeira ampliada ----
+
+// abre a bandeira da pergunta atual quase em tela cheia (pra desenhar olhando)
+function openFlagOverlay() {
+  const q = questions[currentIndex];
+  if (!q) return;
+
+  // a flagcdn so tem larguras fixas; 2560 e a maior
+  const img = document.getElementById("flag-overlay-img");
+  img.src = flagUrl(q.code, 1280);
+  img.srcset = `${flagUrl(q.code, 640)} 640w, ${flagUrl(q.code, 1280)} 1280w, ${flagUrl(q.code, 2560)} 2560w`;
+  img.sizes = "(max-width: 1312px) calc(100vw - 32px), 1280px";
+  img.alt = `Bandeira de ${q.country}, ampliada`;
+
+  document.getElementById("flag-overlay").hidden = false;
+  document.getElementById("flag-overlay-close").focus();
+}
+
+function closeFlagOverlay() {
+  const overlay = document.getElementById("flag-overlay");
+  if (overlay.hidden) return;
+  overlay.hidden = true;
+
+  // o foco nao pode ficar no X escondido
+  const input = document.getElementById("answer-input");
+  if (!input.disabled) input.focus();
+  else document.activeElement.blur();
+}
+
+// qualquer clique no overlay fecha: na bandeira, fora dela ou no X
+document.getElementById("country-flag").addEventListener("click", openFlagOverlay);
+document.getElementById("flag-overlay").addEventListener("click", closeFlagOverlay);
+
+// capture: o Esc e o Enter com o overlay aberto nao chegam no quiz
+document.addEventListener(
+  "keydown",
+  (event) => {
+    if (document.getElementById("flag-overlay").hidden) return;
+    if (event.key === "Escape" || event.key === "Enter") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      closeFlagOverlay();
+    }
+  },
+  true,
+);

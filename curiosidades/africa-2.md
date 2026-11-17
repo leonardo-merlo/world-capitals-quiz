@@ -244,7 +244,7 @@ Perto de Hargeisa, no Somaliland, abrigos de rocha têm pinturas de vacas e figu
 <!-- fonte: Wikipedia (Laas Geel) -->
 
 **Para fazer** · Conhecer a história portuária de Zeila
-Cidade antiga no Golfo de Aden, com mesquitas históricas e construções de coral que lembram séculos de comércio no mar Vermelho. Atenção: consulte alertas oficiais de viagem antes de planejar.
+Cidade antiga no Golfo de Aden, com mesquitas históricas e construções de coral que lembram séculos de comércio no golfo de Áden. Atenção: consulte alertas oficiais de viagem antes de planejar.
 <!-- fonte: Wikipedia (Zeila) ⚠️ verificar -->
 
 ## sd — Sudão

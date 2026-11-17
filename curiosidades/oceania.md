@@ -53,8 +53,8 @@ Perto de Honiara, o Memorial Americano e os campos de batalha lembram a campanha
 <!-- fonte: Wikipedia (Guadalcanal campaign) -->
 
 ## ki — Kiribati
-**Você sabia?** · Um país mudou a linha do tempo do planeta para ficar no mesmo dia
-Em 1995, Kiribati deslocou a Linha Internacional de Data para o leste, de modo que todas as suas ilhas passaram a viver o mesmo dia, e Kiritimati, assim, foi uma das primeiras terras a ver cada novo dia.
+**Você sabia?** · Um país que existe nos quatro hemisférios do planeta!
+Kiribati é o único país do mundo cujo território está ao mesmo tempo nos hemisférios Norte, Sul, Oriental e Ocidental, porque suas 33 ilhas se espalham pelo Pacífico e atravessam a Linha do Equador e o meridiano de 180°.
 <!-- fonte: Wikipedia (International Date Line) -->
 
 **Para fazer** · Pesque bonefish em águas rasas de Kiritimati
@@ -144,7 +144,7 @@ Na casa onde o escritor escocês viveu seus últimos anos, uma trilha sobe até 
 <!-- fonte: Wikipedia (Robert Louis Stevenson Museum) -->
 
 ## to — Tonga
-**Você sabia?** · Tonga tem um portal de pedra de 13 toneladas com mais de 700 anos
+**Você sabia?** · Tonga tem um portal de pedra com mais de 700 anos
 O Ha'amonga 'a Maui é um trilito de coral erguido no século XIII, atribuído ao rei Tu'itatui, e alguns estudiosos defendem que servia de marco astronômico para solstícios.
 <!-- fonte: Wikipedia (Ha'amonga 'a Maui) -->
 

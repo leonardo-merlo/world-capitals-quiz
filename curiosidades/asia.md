@@ -392,7 +392,7 @@ No deserto de Gobi, as rochas avermelhadas de Bayanzag foram palco, em 1923, de 
 
 ## np — Nepal
 **Você sabia?** · A bandeira do Nepal é a única nacional que não é retangular!
-Formada por dois triângulos sobrepostos, representa as montanhas do Himalaia e as duas grandes religiões do país, o hinduísmo e o budismo. Sua forma tem regras de construção geométrica descritas na Constituição.
+Formada por dois triângulos sobrepostos, representa as montanhas do Himalaia e as duas grandes religiões do país, o hinduísmo e o budismo.
 <!-- fonte: Britannica/Wikipedia -->
 
 **Para fazer** · Faça a trilha até o acampamento base do Everest
@@ -439,8 +439,8 @@ Construído em uma ilha artificial, o edifício geométrico guarda séculos de a
 <!-- fonte: Wikipedia -->
 
 **Para fazer** · Veja o Mar Interior, onde as dunas encontram o mar
-Em Khor Al Adaid, uma baía de água salgada cercada por dunas altas forma uma paisagem quase única, reconhecida pela UNESCO como patrimônio natural em lista indicativa.
-<!-- fonte: Wikipedia/Visit Qatar ⚠️ verificar status UNESCO -->
+Em Khor Al Adaid, uma baía de água salgada cercada por dunas altas forma uma paisagem rara, onde o deserto encontra o golfo. Os passeios de 4x4 pelas dunas são o programa clássico.
+<!-- fonte: Wikipedia/Visit Qatar -->
 
 ## kg — Quirguistão
 **Você sabia?** · A bandeira do Quirguistão exibe o teto de uma yurt!
@@ -569,12 +569,12 @@ Cerca de 2 mil ilhas e ilhotas verdes surgem da água esmeralda, e há passeios 
 <!-- fonte: UNESCO -->
 
 **Para fazer** · Passeie à noite entre lanternas coloridas na cidade velha de Hoi An
-O centro histórico guarda casas de comerciantes e uma ponte japonesa, e nas noites de lua cheia as luzes elétricas são reduzidas para dar lugar às lanternas.
+O centro histórico guarda casas de comerciantes e uma ponte japonesa, e as lanternas de seda iluminam as ruas à noite.
 <!-- fonte: UNESCO/Wikipedia -->
 
 ## ye — Iêmen
-**Você sabia?** · O Iêmen tem a cidade de arranha-céus de barro mais antiga do mundo!
-Shibam, com prédios de tijolo de barro de até 7 ou 8 andares, foi construída principalmente no século XVI e é conhecida como o "Manhattan do deserto".
+**Você sabia?** · No Iêmen existe uma cidade de arranha-céus de barro chamada Manhattan do deserto!
+Shibam, com prédios de tijolo de barro de até 7 ou 8 andares, foi construída principalmente no século XVI e é Patrimônio da UNESCO.
 <!-- fonte: UNESCO -->
 
 **Para fazer** · Descubra a ilha de Socotra e suas árvores-sangue-de-dragão

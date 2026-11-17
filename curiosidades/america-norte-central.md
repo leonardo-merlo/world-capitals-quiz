@@ -282,7 +282,7 @@ Cenas do primeiro filme da série foram gravadas na baía de Wallilabou, onde ai
 O Parque Marinho Tobago Cays reúne cinco ilhotas desertas rodeadas por recife, onde tartarugas-verdes nadam em águas rasas.
 <!-- fonte: Wikipedia (Tobago Cays) -->
 
-**Para fazer** · Passear pelo jardim botânico mais antigo do hemisfério ocidental
+**Para fazer** · Passear por um dos jardins botânicos mais antigos das Américas
 O Jardim Botânico de Kingstown, fundado no século XVIII, recebeu mudas de fruta-pão trazidas pelo capitão Bligh, e hoje mostra palmeiras, orquídeas e o papagaio nacional.
 <!-- fonte: Wikipedia (Saint Vincent Botanic Gardens) ⚠️ verificar -->
 

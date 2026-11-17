@@ -437,17 +437,117 @@
         color: var(--text);
       }
 
-      .feedback-fact {
-        font-size: 0.875rem;
-        color: var(--muted);
+      /* ─── Carrossel de curiosidades ─── */
+      .facts-carousel {
+        position: relative;
         border-top: 1px solid rgba(255, 255, 255, 0.06);
-        padding-top: 0.75rem;
         margin-top: 0.75rem;
-        font-style: italic;
+        padding-top: 0.75rem;
       }
 
-      .feedback-fact::before {
-        content: "💡 ";
+      .facts-track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        outline: none;
+      }
+
+      .facts-track::-webkit-scrollbar {
+        display: none;
+      }
+
+      .facts-slide {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        box-sizing: border-box;
+        padding: 0 1.9rem;
+      }
+
+      .facts-tag {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.35rem;
+      }
+
+      .facts-tag-do {
+        color: var(--accent2);
+      }
+
+      .facts-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.35;
+        color: var(--text);
+        margin-bottom: 0.4rem;
+      }
+
+      .facts-text {
+        font-size: 0.85rem;
+        line-height: 1.55;
+        color: var(--muted);
+      }
+
+      .facts-arrow {
+        position: absolute;
+        top: calc(50% - 0.75rem);
+        width: 1.6rem;
+        height: 1.6rem;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+        font-size: 1.1rem;
+        line-height: 1;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity var(--transition), background var(--transition);
+      }
+
+      .facts-arrow:hover,
+      .facts-arrow:focus-visible {
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.14);
+        color: var(--text);
+      }
+
+      .facts-prev {
+        left: 0;
+      }
+
+      .facts-next {
+        right: 0;
+      }
+
+      .facts-prev.is-hidden {
+        visibility: hidden;
+      }
+
+      .facts-next.is-hidden {
+        visibility: hidden;
+      }
+
+      .facts-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.4rem;
+        margin-top: 0.7rem;
+      }
+
+      .facts-dot {
+        width: 0.35rem;
+        height: 0.35rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        transition: background var(--transition);
+      }
+
+      .facts-dot.active {
+        background: var(--accent);
       }
 
       /* ─── Results screen ─── */
@@ -1262,6 +1362,7 @@
 
     <script src="data.js"></script>
     <script src="countries-info.js"></script>
+    <script src="curiosities.js"></script>
     <script src="countries-geo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
     <script src="quiz.js"></script>

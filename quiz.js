@@ -70,6 +70,79 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+// ---- carrossel de curiosidades ----
+// cada pais tem 3 itens em COUNTRY_FACTS (curiosities.js): { type, title, text }
+// os itens ficam lado a lado numa faixa com scroll-snap, entao arrastar o dedo
+// funciona nativamente. as setas e os pontos so controlam essa mesma faixa.
+
+function renderFactsCarousel(code) {
+  const facts = (typeof COUNTRY_FACTS !== "undefined" && COUNTRY_FACTS[code]) || [];
+  if (facts.length === 0) return "";
+
+  const slides = facts
+    .map(
+      (fact, i) => `
+      <article class="facts-slide" aria-label="Curiosidade ${i + 1} de ${facts.length}">
+        <span class="facts-tag ${fact.type === "do" ? "facts-tag-do" : ""}">${
+          fact.type === "do" ? "Para fazer" : "Você sabia?"
+        }</span>
+        <h3 class="facts-title">${escapeHtml(fact.title)}</h3>
+        <p class="facts-text">${escapeHtml(fact.text)}</p>
+      </article>`,
+    )
+    .join("");
+
+  const dots = facts
+    .map((_, i) => `<span class="facts-dot${i === 0 ? " active" : ""}"></span>`)
+    .join("");
+
+  return `
+    <section class="facts-carousel" aria-roledescription="carrossel" aria-label="Curiosidades">
+      <button type="button" class="facts-arrow facts-prev is-hidden" aria-label="Curiosidade anterior" data-dir="-1">‹</button>
+      <div class="facts-track" tabindex="0">${slides}</div>
+      <button type="button" class="facts-arrow facts-next" aria-label="Próxima curiosidade" data-dir="1">›</button>
+      <div class="facts-dots" aria-hidden="true">${dots}</div>
+    </section>
+  `;
+}
+
+// um unico listener para todos os carrosseis (o html deles e recriado a toda hora)
+document.addEventListener("click", (event) => {
+  const arrow = event.target.closest(".facts-arrow");
+  if (!arrow) return;
+  const carousel = arrow.closest(".facts-carousel");
+  const track = carousel.querySelector(".facts-track");
+  track.scrollBy({ left: Number(arrow.dataset.dir) * track.clientWidth, behavior: "smooth" });
+});
+
+// scroll nao borbulha, entao usa captura para atualizar os pontos e as setas
+document.addEventListener(
+  "scroll",
+  (event) => {
+    const track = event.target;
+    if (!track.classList || !track.classList.contains("facts-track")) return;
+    const carousel = track.closest(".facts-carousel");
+    const count = track.children.length;
+    const index = Math.round(track.scrollLeft / track.clientWidth);
+    carousel.querySelectorAll(".facts-dot").forEach((dot, i) => {
+      dot.classList.toggle("active", i === index);
+    });
+    carousel.querySelector(".facts-prev").classList.toggle("is-hidden", index === 0);
+    carousel.querySelector(".facts-next").classList.toggle("is-hidden", index === count - 1);
+  },
+  true,
+);
+
+// setas do teclado quando a faixa esta focada
+document.addEventListener("keydown", (event) => {
+  if (!event.target.classList || !event.target.classList.contains("facts-track")) return;
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+  event.preventDefault();
+  event.stopPropagation();
+  const dir = event.key === "ArrowRight" ? 1 : -1;
+  event.target.scrollBy({ left: dir * event.target.clientWidth, behavior: "smooth" });
+});
+
 // ---- navegacao entre telas ----
 
 // mostra uma tela e esconde todas as outras
@@ -232,7 +305,7 @@ function showFeedback(isCorrect, question, userAnswer) {
         <span class="feedback-title">${titulo}</span>
       </div>
       ${answerLine}
-      <p class="feedback-fact">${escapeHtml(question.fact)}</p>
+      ${renderFactsCarousel(question.code)}
     </div>
   `;
 }
